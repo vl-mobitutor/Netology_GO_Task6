@@ -2,120 +2,191 @@ package main
 
 import (
 	"fmt"
-	"github.com/vl-mobitutor/Netology_GO_Task3_1_3/pkg/card"
-	"time"
+	"github.com/vl-mobitutor/Netology_GO_Task6/pkg/card"
+	"github.com/vl-mobitutor/Netology_GO_Task6/pkg/utilities"
 )
 
 func main() {
 
-	//ИНИЦИАЛИЗАЦИЯ ДАННЫХ КАРТЫ И ПЕРВЫХ ТРАНЗАКЦИЙ
-
-	//Установка срока действия карты в формате UTC
-	dateLayout:= "02/01/2006"
-	cardExpiredDate, _ := time.Parse(dateLayout, "01/01/2022")
-
-	//Установка даты и времени транзакции в формате UTC
-	dateTimeLayout := "01/02/2006 3:04:05 PM"
-	transactionDateTime, _ := time.Parse(dateTimeLayout, "06/05/2020 5:09:01 PM")
-
+	//Инициализация данных карты
 	myCard := &card.Card{
 		Id:1,
 		Number: "1111 2222 3333 4444",
-		ExpiredDate: cardExpiredDate,
-		CvCode: "001",
 		PaymentSystem: "Master",
 		BankIssuer: "SuperBank",
-		CardholderName: "Ilon Mask",
 		Balance: 100_000_00,
 		Currency: "RUR",
-		Transactions: []card.Transaction{	//начало массива транзакций
-			{
-				Id: 1001,
-				Amount:  -735_55,
-				Currency: "RUR",
-				DateTime: transactionDateTime,
-				Description: "Gipermarket",
-				Status:  "Операция в обработке",
-				MccCode: "5411",
-			},
 
-			{
-				Id: 1002,
-				Amount: 2000_00,
-				Currency: "RUR",
-				DateTime: transactionDateTime,
-				Description: "Пополнение через Сбербанк",
-				Status:  "Обработана",
-				MccCode: "6539",
-			},
-
-			{
-				Id: 1003,
-				Amount: -1203_91,
-				Currency: "RUR",
-				DateTime: transactionDateTime,
-				Description: "Gastrobar",
-				Status:  "Обработана",
-				MccCode: "5812",
-			},
-
-		},	//конец массива транзакций
 	}
 
-	fmt.Println(myCard)
-	fmt.Println("----------------------------------------------------------------------")
+	//Инициализация массива транзакций
+	myTransactions:= []card.Transaction{	//начало массива транзакций
+		{
+			Id: 1001,
+			Amount:  -1003_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("01/05/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5411",
+		},
 
+		{
+			Id: 1002,
+			Amount: -1001_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("02/05/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5411",
+		},
 
+		{
+			Id: 1003,
+			Amount: -1002_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("03/05/2020 5:09:01 PM"),
+			Description: "Gastrobar",
+			Status:  "Обработана",
+			MccCode: "5812",
+		},
 
-	//ДОБАВЛЕНИЕ ТРАНЗАКЦИЙ ЧЕРЕЗ ФУНКЦИЮ
+		{
+			Id: 1004,
+			Amount:  -1005_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("04/05/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5411",
+		},
 
-	transactionDateTime, _ = time.Parse(dateTimeLayout, "07/07/2020 2:02:08 PM")
-	newTransaction := &card.Transaction{
-		Id: 1004,
-		Amount:  -1000_00,
-		Currency: "RUR",
-		DateTime: transactionDateTime,
-		Description: "Gipermarket",
-		Status:  "Операция в обработке",
-		MccCode: "5411",
+		{
+			Id: 1005,
+			Amount:  -1004_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("05/05/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5400",
+		},
+
+		{
+			Id: 1006,
+			Amount:  -2005_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("06/06/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5400",
+		},
+
+		{
+			Id: 1007,
+			Amount:  -2004_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("07/06/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5400",
+		},
+
+		{
+			Id: 1008,
+			Amount:  -2003_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("08/06/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5400",
+		},
+
+		{
+			Id: 1009,
+			Amount:  -2002_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("09/06/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5400",
+		},
+
+		{
+			Id: 1010,
+			Amount:  -2001_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("10/06/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5400",
+		},
+
+		{
+			Id: 1011,
+			Amount:  -3002_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("01/07/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5400",
+		},
+
+		{
+			Id: 1012,
+			Amount:  -3001_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("02/07/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5400",
+		},
+
+		{
+			Id: 1013,
+			Amount:  -3003_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("03/07/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5400",
+		},
+
+		{
+			Id: 1014,
+			Amount:  -3004_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("04/07/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5400",
+		},
+
+		{
+			Id: 1015,
+			Amount:  -3005_00,
+			Currency: "RUR",
+			DateTime: utilities.TransactionDateTime("05/07/2020 5:09:01 PM"),
+			Description: "Gipermarket",
+			Status:  "Операция в обработке",
+			MccCode: "5400",
+		},
+
 	}
-	card.AddTransaction(myCard, newTransaction)
-
-	newTransaction = &card.Transaction{
-		Id: 1005,
-		Amount:  -2000_00,
-		Currency: "RUR",
-		DateTime: transactionDateTime,
-		Description: "Gipermarket",
-		Status:  "Операция в обработке",
-		MccCode: "5400",
-	}
-	card.AddTransaction(myCard, newTransaction)
-
-	fmt.Println(myCard)
-	fmt.Println("----------------------------------------------------------------------")
-
-	//СУММИРОВАНИЕ ПО КОДУ МСС
-	selectCodes := []string{"5411"}
-	totalSum :=card.SumByMCC(myCard.Transactions, selectCodes)
-
-	fmt.Printf("Общая сумма операций по кодам МСС: %s составила %d копеек \n", selectCodes, totalSum)
+	myCard.Transactions = myTransactions
 
 
-	//Демо функции выборки последних N транзакций
-	transactionNumber := 3
-	card.LastNTransactions(myCard, transactionNumber)
-	myLastTransacions := card.LastNTransactions(myCard, transactionNumber )
-	fmt.Printf("Последние %d транзакций по карте:  \n",  len(myLastTransacions))
-	fmt.Println(myLastTransacions)
+	fmt.Println("ЗАДАНИЕ №1 - СОРТИРОВКА")
+	fmt.Println("----------------- Несортированный массив транзакций--------------------------------------------")
+	fmt.Println(myCard.Transactions)
 
-	fmt.Printf("Общая сумма операций по кодам МСС: %s - составила %d копеек \n", selectCodes,totalSum)
+	fmt.Println("------- Массив транзакций, отсортированный по убыванию суммы транзакции------------------------")
+	card.SortByAmountDecrease(myCard.Transactions)
+	fmt.Println(myCard.Transactions)
 
+	fmt.Println("------- Массив транзакций, отсортированный по возрастанию суммы транзакции------------------------")
+	card.SortByAmountIncrease(myCard.Transactions)
+	fmt.Println(myCard.Transactions)
 
-	//Демо функции - определение категории торговой точки по MСС-коду транзакции
-	transactionNumber := 4
-	category := card.TranslateMCC(myCard.Transactions[transactionNumber].MccCode) //
-	fmt.Printf("Транзакция № %d имеет категорию торговой точки: %s \n", transactionNumber, category)
-
+	fmt.Println("ЗАДАНИЕ №2 - ГОРУТИНЫ")
 
 }
