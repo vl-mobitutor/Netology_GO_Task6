@@ -1,6 +1,7 @@
 package card
 
 import (
+	"fmt"
 	"github.com/vl-mobitutor/Netology_GO_Task6/pkg/utilities"
 	"sort"
 	"time"
@@ -45,13 +46,28 @@ func SortByAmountIncrease(transactions []Transaction) []Transaction{
 }
 
 
-//Функция подсчета суммы транзакций внутри месяца
-func TotalMonthAmount(transactions []Transaction, startDate, endDate string) int64 {
-	var totalSum int64 = 0
+//Функция выборки транзакций внутри месяца
+func SelectMonthTransactions(transactions []Transaction, startDate, endDate string) (monthSlice []Transaction) {
 	for _, myTransaction := range transactions {
 		if myTransaction.DateTime.After(utilities.TransactionDateTime(startDate)) && myTransaction.DateTime.Before(utilities.TransactionDateTime(endDate)) {
-			totalSum += myTransaction.Amount
+			monthSlice = append(monthSlice, myTransaction)
 		}
 	}
+	return monthSlice
+}
+
+//Функция подсчета общей суммы операций в массиве транзакций
+func TotalSumCalculation (transactions []Transaction) (totalSum int64) {
+	totalSum = 0
+	for _, myTransaction := range transactions {
+		totalSum += myTransaction.Amount
+	}
 	return totalSum
+}
+
+//Функция построчной печати элементов слайса транзакций
+func TransactionSlicePrinting(transactions []Transaction) {
+	for _, myTransaction := range transactions {
+		fmt.Printf("%+v\n", myTransaction)
+	}
 }

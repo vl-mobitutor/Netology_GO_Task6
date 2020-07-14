@@ -178,17 +178,20 @@ func main() {
 	fmt.Println("ЗАДАНИЕ №1 - СОРТИРОВКА")
 	fmt.Println("-----------------------------------------------------------------------------------------------")
 	fmt.Println("Несортированный массив транзакций:")
-	fmt.Println(myCard.Transactions)
+	fmt.Println("-------------------------------------------------------------------")
+	card.TransactionSlicePrinting(myCard.Transactions)
 	fmt.Println()
 
 	fmt.Println("Массив транзакций, отсортированный по убыванию суммы транзакции:")
+	fmt.Println("-------------------------------------------------------------------")
 	card.SortByAmountDecrease(myCard.Transactions)
-	fmt.Println(myCard.Transactions)
+	card.TransactionSlicePrinting(myCard.Transactions)
 	fmt.Println()
 
 	fmt.Println("Массив транзакций, отсортированный по возрастанию суммы транзакции:")
+	fmt.Println("-------------------------------------------------------------------")
 	card.SortByAmountIncrease(myCard.Transactions)
-	fmt.Println(myCard.Transactions)
+	card.TransactionSlicePrinting(myCard.Transactions)
 	fmt.Println()
 
 
@@ -196,31 +199,30 @@ func main() {
 	fmt.Println("ЗАДАНИЕ №2 - ГОРУТИНЫ")
 	fmt.Println("-----------------------------------------------------------------------------------------------")
 
+	//Нарезка исходного массива на месячные слайсы
+	mayTransactions := card.SelectMonthTransactions(myCard.Transactions, "05/01/2020 0:00:00 AM", "06/01/2020 0:00:00 AM")
+	juneTransactions := card.SelectMonthTransactions(myCard.Transactions, "06/01/2020 0:00:00 AM", "07/01/2020 0:00:00 AM")
+	julyTransactions := card.SelectMonthTransactions(myCard.Transactions, "07/01/2020 0:00:00 AM", "08/01/2020 0:00:00 AM")
+
 	wg := sync.WaitGroup{}
 	wg.Add(3)
 
 	//Расчет общей суммы транзакций внутри отдельных месяцев
 	go func() {
-		startDate := "05/01/2020 0:00:00 AM"
-		endDate := "06/01/2020 0:00:00 AM"
-		totalSum := card.TotalMonthAmount(myCard.Transactions, startDate, endDate )
-		fmt.Printf("\nГорутина №1 - Сумма транзакций за период с %s по %s составила: %d копеек", startDate, endDate, totalSum)
+		totalSum := card.TotalSumCalculation(mayTransactions)
+		fmt.Printf("\nГорутина №1 - Сумма транзакций за Май 2020 составила: %d копеек", totalSum)
 		wg.Done()
 	}()
 
 	go func() {
-		startDate := "06/01/2020 0:00:00 AM"
-		endDate := "07/01/2020 0:00:00 AM"
-		totalSum := card.TotalMonthAmount(myCard.Transactions, startDate, endDate )
-		fmt.Printf("\nГорутина №2 - Сумма транзакций за период с %s по %s составила: %d копеек", startDate, endDate, totalSum)
+		totalSum := card.TotalSumCalculation(juneTransactions)
+		fmt.Printf("\nГорутина №2 - Сумма транзакций за Июнь 2020 составила: %d копеек", totalSum)
 		wg.Done()
 	}()
 
 	go func() {
-		startDate := "07/01/2020 0:00:00 AM"
-		endDate := "08/01/2020 0:00:00 AM"
-		totalSum := card.TotalMonthAmount(myCard.Transactions, startDate, endDate )
-		fmt.Printf("\nГорутина №3 - Сумма транзакций за период с %s по %s составила: %d копеек", startDate, endDate, totalSum)
+		totalSum := card.TotalSumCalculation(julyTransactions)
+		fmt.Printf("\nГорутина №3 - Сумма транзакций за Июль 2020 составила: %d копеек", totalSum)
 		wg.Done()
 	}()
 
