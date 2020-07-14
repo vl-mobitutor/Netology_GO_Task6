@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/vl-mobitutor/Netology_GO_Task6/pkg/card"
 	"github.com/vl-mobitutor/Netology_GO_Task6/pkg/utilities"
+	"sync"
 )
 
 func main() {
@@ -20,12 +21,12 @@ func main() {
 	}
 
 	//Инициализация массива транзакций
-	myTransactions:= []card.Transaction{	//начало массива транзакций
+	myCard.Transactions = []card.Transaction{	//начало массива транзакций
 		{
 			Id: 1001,
 			Amount:  -1003_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("01/05/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("05/01/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5411",
@@ -35,7 +36,7 @@ func main() {
 			Id: 1002,
 			Amount: -1001_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("02/05/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("05/02/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5411",
@@ -45,7 +46,7 @@ func main() {
 			Id: 1003,
 			Amount: -1002_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("03/05/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("05/03/2020 5:09:01 PM"),
 			Description: "Gastrobar",
 			Status:  "Обработана",
 			MccCode: "5812",
@@ -55,7 +56,7 @@ func main() {
 			Id: 1004,
 			Amount:  -1005_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("04/05/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("05/04/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5411",
@@ -75,7 +76,7 @@ func main() {
 			Id: 1006,
 			Amount:  -2005_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("06/06/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("06/01/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5400",
@@ -85,7 +86,7 @@ func main() {
 			Id: 1007,
 			Amount:  -2004_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("07/06/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("06/02/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5400",
@@ -95,7 +96,7 @@ func main() {
 			Id: 1008,
 			Amount:  -2003_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("08/06/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("06/03/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5400",
@@ -105,7 +106,7 @@ func main() {
 			Id: 1009,
 			Amount:  -2002_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("09/06/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("06/04/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5400",
@@ -115,7 +116,7 @@ func main() {
 			Id: 1010,
 			Amount:  -2001_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("10/06/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("06/05/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5400",
@@ -125,7 +126,7 @@ func main() {
 			Id: 1011,
 			Amount:  -3002_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("01/07/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("07/01/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5400",
@@ -135,7 +136,7 @@ func main() {
 			Id: 1012,
 			Amount:  -3001_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("02/07/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("07/02/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5400",
@@ -145,7 +146,7 @@ func main() {
 			Id: 1013,
 			Amount:  -3003_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("03/07/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("07/03/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5400",
@@ -155,7 +156,7 @@ func main() {
 			Id: 1014,
 			Amount:  -3004_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("04/07/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("07/04/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5400",
@@ -165,28 +166,64 @@ func main() {
 			Id: 1015,
 			Amount:  -3005_00,
 			Currency: "RUR",
-			DateTime: utilities.TransactionDateTime("05/07/2020 5:09:01 PM"),
+			DateTime: utilities.TransactionDateTime("07/05/2020 5:09:01 PM"),
 			Description: "Gipermarket",
 			Status:  "Операция в обработке",
 			MccCode: "5400",
 		},
 
 	}
-	myCard.Transactions = myTransactions
 
 
 	fmt.Println("ЗАДАНИЕ №1 - СОРТИРОВКА")
-	fmt.Println("----------------- Несортированный массив транзакций--------------------------------------------")
+	fmt.Println("-----------------------------------------------------------------------------------------------")
+	fmt.Println("Несортированный массив транзакций:")
 	fmt.Println(myCard.Transactions)
+	fmt.Println()
 
-	fmt.Println("------- Массив транзакций, отсортированный по убыванию суммы транзакции------------------------")
+	fmt.Println("Массив транзакций, отсортированный по убыванию суммы транзакции:")
 	card.SortByAmountDecrease(myCard.Transactions)
 	fmt.Println(myCard.Transactions)
+	fmt.Println()
 
-	fmt.Println("------- Массив транзакций, отсортированный по возрастанию суммы транзакции------------------------")
+	fmt.Println("Массив транзакций, отсортированный по возрастанию суммы транзакции:")
 	card.SortByAmountIncrease(myCard.Transactions)
 	fmt.Println(myCard.Transactions)
+	fmt.Println()
 
+
+	fmt.Println("-----------------------------------------------------------------------------------------------")
 	fmt.Println("ЗАДАНИЕ №2 - ГОРУТИНЫ")
+	fmt.Println("-----------------------------------------------------------------------------------------------")
 
+	wg := sync.WaitGroup{}
+	wg.Add(3)
+
+	//Расчет общей суммы транзакций внутри отдельных месяцев
+	go func() {
+		startDate := "05/01/2020 0:00:00 AM"
+		endDate := "06/01/2020 0:00:00 AM"
+		totalSum := card.TotalMonthAmount(myCard.Transactions, startDate, endDate )
+		fmt.Printf("\nГорутина №1 - Сумма транзакций за период с %s по %s составила: %d копеек", startDate, endDate, totalSum)
+		wg.Done()
+	}()
+
+	go func() {
+		startDate := "06/01/2020 0:00:00 AM"
+		endDate := "07/01/2020 0:00:00 AM"
+		totalSum := card.TotalMonthAmount(myCard.Transactions, startDate, endDate )
+		fmt.Printf("\nГорутина №2 - Сумма транзакций за период с %s по %s составила: %d копеек", startDate, endDate, totalSum)
+		wg.Done()
+	}()
+
+	go func() {
+		startDate := "07/01/2020 0:00:00 AM"
+		endDate := "08/01/2020 0:00:00 AM"
+		totalSum := card.TotalMonthAmount(myCard.Transactions, startDate, endDate )
+		fmt.Printf("\nГорутина №3 - Сумма транзакций за период с %s по %s составила: %d копеек", startDate, endDate, totalSum)
+		wg.Done()
+	}()
+
+	wg.Wait()
+	fmt.Printf("\nРабота горутин завершена!")
 }

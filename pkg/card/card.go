@@ -1,6 +1,7 @@
 package card
 
 import (
+	"github.com/vl-mobitutor/Netology_GO_Task6/pkg/utilities"
 	"sort"
 	"time"
 )
@@ -25,6 +26,7 @@ type Card struct {
 	Transactions []Transaction
 }
 
+
 //Функция сортировки массива транзакций по убыванию суммы
 func SortByAmountDecrease(transactions []Transaction) []Transaction{
 	sort.SliceStable(transactions, func(i, j int) bool {
@@ -33,10 +35,23 @@ func SortByAmountDecrease(transactions []Transaction) []Transaction{
 	return transactions
 }
 
+
 //Функция сортировки массива транзакций по возрастанию суммы
 func SortByAmountIncrease(transactions []Transaction) []Transaction{
 	sort.SliceStable(transactions, func(i, j int) bool {
 		return transactions[i].Amount > transactions[j].Amount
 	})
 	return transactions
+}
+
+
+//Функция подсчета суммы транзакций внутри месяца
+func TotalMonthAmount(transactions []Transaction, startDate, endDate string) int64 {
+	var totalSum int64 = 0
+	for _, myTransaction := range transactions {
+		if myTransaction.DateTime.After(utilities.TransactionDateTime(startDate)) && myTransaction.DateTime.Before(utilities.TransactionDateTime(endDate)) {
+			totalSum += myTransaction.Amount
+		}
+	}
+	return totalSum
 }
