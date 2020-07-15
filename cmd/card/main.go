@@ -5,6 +5,8 @@ import (
 	"github.com/vl-mobitutor/Netology_GO_Task6/pkg/card"
 	"github.com/vl-mobitutor/Netology_GO_Task6/pkg/utilities"
 	"sync"
+
+	//"sync"
 )
 
 func main() {
@@ -199,33 +201,21 @@ func main() {
 	fmt.Println("ЗАДАНИЕ №2 - ГОРУТИНЫ")
 	fmt.Println("-----------------------------------------------------------------------------------------------")
 
-	//Нарезка исходного массива на месячные слайсы
-	mayTransactions := card.SelectMonthTransactions(myCard.Transactions, "05/01/2020 0:00:00 AM", "06/01/2020 0:00:00 AM")
-	juneTransactions := card.SelectMonthTransactions(myCard.Transactions, "06/01/2020 0:00:00 AM", "07/01/2020 0:00:00 AM")
-	julyTransactions := card.SelectMonthTransactions(myCard.Transactions, "07/01/2020 0:00:00 AM", "08/01/2020 0:00:00 AM")
+	fmt.Println("Подготовка данных - печать map'а слайсов транзакций, сгруппированных по месяцам:")
+	selectedTransactionsMap :=card.SelectMonthTransactions(myCard.Transactions)
+	card.TransactionMapPrinting(selectedTransactionsMap)
 
 	wg := sync.WaitGroup{}
-	wg.Add(3)
-
-	//Расчет общей суммы транзакций внутри отдельных месяцев
-	go func() {
-		totalSum := card.TotalSumCalculation(mayTransactions)
-		fmt.Printf("\nГорутина №1 - Сумма транзакций за Май 2020 составила: %d копеек", totalSum)
-		wg.Done()
-	}()
-
-	go func() {
-		totalSum := card.TotalSumCalculation(juneTransactions)
-		fmt.Printf("\nГорутина №2 - Сумма транзакций за Июнь 2020 составила: %d копеек", totalSum)
-		wg.Done()
-	}()
-
-	go func() {
-		totalSum := card.TotalSumCalculation(julyTransactions)
-		fmt.Printf("\nГорутина №3 - Сумма транзакций за Июль 2020 составила: %d копеек", totalSum)
-		wg.Done()
-	}()
-
+	wg.Add(len(selectedTransactionsMap))
+	goroutineCounter := 0
+	for month, monthlyTransactions := range selectedTransactionsMap {
+		goroutineCounter++
+		go func(myMonth string, myTransactions []card.Transaction, myCounter int) {
+			totalSum := card.TotalSumCalculation(myTransactions)
+			fmt.Printf("\nГорутина %d - Сумма транзакций за %s составила: %d копеек", myCounter, myMonth, totalSum)
+			wg.Done()
+		}(month, monthlyTransactions, goroutineCounter)
+	}
 	wg.Wait()
 	fmt.Printf("\nРабота горутин завершена!")
 }

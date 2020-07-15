@@ -2,8 +2,8 @@ package card
 
 import (
 	"fmt"
-	"github.com/vl-mobitutor/Netology_GO_Task6/pkg/utilities"
 	"sort"
+	"strconv"
 	"time"
 )
 
@@ -46,15 +46,16 @@ func SortByAmountIncrease(transactions []Transaction) []Transaction{
 }
 
 
-//Функция выборки транзакций внутри месяца
-func SelectMonthTransactions(transactions []Transaction, startDate, endDate string) (monthSlice []Transaction) {
+//Функция "нарезки" исходного массива транзакций в  map из слайсов транзакций, сгруппированных по месяцам
+func SelectMonthTransactions(transactions []Transaction)  (selectedTransactions map[string][]Transaction){
+	selectedTransactions = map[string][]Transaction{}
 	for _, myTransaction := range transactions {
-		if myTransaction.DateTime.After(utilities.TransactionDateTime(startDate)) && myTransaction.DateTime.Before(utilities.TransactionDateTime(endDate)) {
-			monthSlice = append(monthSlice, myTransaction)
+		myMonth := myTransaction.DateTime.Month().String() + "_" + strconv.Itoa(myTransaction.DateTime.Year())
+		selectedTransactions[myMonth] = append(selectedTransactions[myMonth], myTransaction)
 		}
-	}
-	return monthSlice
+	return selectedTransactions
 }
+
 
 //Функция подсчета общей суммы операций в массиве транзакций
 func TotalSumCalculation (transactions []Transaction) (totalSum int64) {
@@ -65,9 +66,18 @@ func TotalSumCalculation (transactions []Transaction) (totalSum int64) {
 	return totalSum
 }
 
+
 //Функция построчной печати элементов слайса транзакций
 func TransactionSlicePrinting(transactions []Transaction) {
 	for _, myTransaction := range transactions {
 		fmt.Printf("%+v\n", myTransaction)
+	}
+}
+
+
+//Функция построчной печати элементов map'a транзакций
+func TransactionMapPrinting(transactions map[string][]Transaction) {
+	for key, value := range transactions {
+		fmt.Println(key, value)
 	}
 }
